@@ -15,10 +15,18 @@ namespace Invaders
             this.textureName = textureName;
             sprite = new Sprite();
         }
+        public Vector2f Position
+        {
+            get => sprite.Position;
+            set => sprite.Position = value;
+        }
+
+        public virtual bool Solid => false;
 
         public virtual void Create(Scene scene)
         {
-            //sprite.Texture = scene.Assets.LoadTexture(textureName);
+            sprite.Texture = scene.Assets.LoadTexture(textureName);
+            
             
         }
 
@@ -26,11 +34,16 @@ namespace Invaders
         {
             
         }
-
-        public Vector2f Position
+        public virtual void Update(Scene scene, float deltaTime)
         {
-            get => sprite.Position;
-            set => sprite.Position = value;
+            Position += new Vector2f(10 * deltaTime, 0);
         }
+
+        public virtual void Render(RenderTarget target)
+        {
+            target.Draw(sprite);
+        }
+
+        
     }
 }

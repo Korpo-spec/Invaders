@@ -10,8 +10,30 @@ namespace Invaders
     public class Scene
     {
         private readonly List<Entity> entities = new List<Entity>();
-        public event EventHandler<UpdateEvent> Update;
-        public event EventHandler<RenderEvent> Render;
+        public event UpdateEvent Update;
+        public event RenderEvent Render;
+
+        public readonly AssetManager Assets;
+        public Scene()
+        {
+            Assets = new AssetManager();
+        }
+
+        public void Spawn(Entity entity)
+        {
+            entities.Add(entity);
+            entity.Create(this);
+        }
+
+        public void UpdateAll(float deltaTime)
+        {
+            Update?.Invoke(this, deltaTime);
+        }
+
+        public void RenderAll(RenderTarget target)
+        {
+            Render?.Invoke(target);
+        }
 
 
     }
