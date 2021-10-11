@@ -1,19 +1,22 @@
 using System;
 using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Invaders
 {
-    public class Player : Entity
+    public class PlayerShip : Entity
     {
-        public Player() : base("sheet")
+        private float speed = 500;
+
+        public PlayerShip() : base("sheet")
         {
 
         }
         public override void Create(Scene scene)
         {
             base.Create(scene);
-            sprite.TextureRect = new IntRect(425, 384, 93, 84);
+            sprite.TextureRect = scene.Assets.LoadTile("playerShip1_blue");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             scene.Update += Update;
             scene.Render += Render;
@@ -21,7 +24,11 @@ namespace Invaders
 
         public override void Update(Scene scene, float deltaTime)
         {
-            
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Right)) Position += new Vector2f(1,0) * speed * deltaTime;
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Down)) Position += new Vector2f(0, 1) * speed * deltaTime;
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Left)) Position += new Vector2f(-1, 0) * speed * deltaTime;
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Up)) Position += new Vector2f (0, -1) * speed * deltaTime;
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Space)) scene.Spawn(new Bullet(new Vector2f(0, -1)){Position = this.Position});
         }
     }
 }
