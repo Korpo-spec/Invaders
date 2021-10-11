@@ -8,7 +8,7 @@ namespace Invaders
     {
 
         public Vector2f direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
-        public EnemyShip() : base("spaceSheet")
+        public EnemyShip() : base("sheet")
         {
 
         }
@@ -16,9 +16,10 @@ namespace Invaders
         public override void Create(Scene scene)
         {
             base.Create(scene);
-            sprite.TextureRect = new IntRect(425, 384, 93, 84);
+            sprite.TextureRect = scene.Assets.LoadTile("enemyBlack");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             sprite.Rotation = ((180 / MathF.PI) * MathF.Atan2(direction.Y, direction.X)) + -90;
+            
             scene.Update += Update;
             scene.Render += Render;
         }
