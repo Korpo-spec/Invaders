@@ -18,6 +18,7 @@ namespace Invaders
             base.Create(scene);
             scene.Render += Render;
         }
+        
 
         public override void Render(RenderTarget target)
         {

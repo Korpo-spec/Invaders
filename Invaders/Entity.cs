@@ -23,6 +23,8 @@ namespace Invaders
 
         public virtual bool Solid => false;
 
+        public virtual FloatRect Bounds => sprite.GetGlobalBounds();
+
         public virtual void Create(Scene scene)
         {
             sprite.Texture = scene.Assets.LoadTexture(textureName);
@@ -32,16 +34,26 @@ namespace Invaders
 
         public virtual void Destroy(Scene scene)
         {
-            
+            scene.Update -= Update;
+            scene.Render -= Render;
         }
         public virtual void Update(Scene scene, float deltaTime)
         {
-            Position += new Vector2f(10 * deltaTime, 0);
+            foreach (Entity found in scene.FindIntersects(Bounds)) //Find collisions
+            {
+                CollideWith(scene, found);
+            }
+            
         }
 
         public virtual void Render(RenderTarget target)
         {
             target.Draw(sprite);
+        }
+
+        protected virtual void CollideWith(Scene scene, Entity other)
+        {
+            
         }
 
         

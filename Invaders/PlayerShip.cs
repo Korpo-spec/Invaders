@@ -8,6 +8,8 @@ namespace Invaders
     public class PlayerShip : Entity
     {
         private float speed = 500;
+        private float timer = 0;
+        private float attackSpeed = 0.5f;
 
         public PlayerShip() : base("sheet")
         {
@@ -24,11 +26,17 @@ namespace Invaders
 
         public override void Update(Scene scene, float deltaTime)
         {
+            timer += deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Right)) Position += new Vector2f(1,0) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Down)) Position += new Vector2f(0, 1) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Left)) Position += new Vector2f(-1, 0) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Up)) Position += new Vector2f (0, -1) * speed * deltaTime;
-            if(Keyboard.IsKeyPressed(Keyboard.Key.Space)) scene.Spawn(new Bullet(new Vector2f(0, -1)){Position = this.Position});
+
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && timer > attackSpeed)
+            {
+                scene.Spawn(new Bullet(new Vector2f(0, -1)){Position = this.Position});
+                timer = 0;
+            }
         }
     }
 }
