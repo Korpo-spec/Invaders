@@ -19,6 +19,9 @@ namespace Invaders
             sprite.TextureRect = scene.Assets.LoadTile("enemyBlack");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             sprite.Rotation = ((180 / MathF.PI) * MathF.Atan2(direction.Y, direction.X)) + -90;
+            Schedule schedule =  new Schedule(1);
+            schedule.Action += (Scene Scene) => Scene.Spawn(new Bullet(direction){Position = (this.Position + (direction * 120)) });
+            scene.Spawn(schedule);
             
             scene.Update += Update;
             scene.Render += Render;
