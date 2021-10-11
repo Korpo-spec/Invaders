@@ -7,18 +7,20 @@ namespace Invaders
 {
     class Program
     {
+        public const int WindowW = 828;
+        public const int WindowH = 900;
         static void Main(string[] args)
         {
-            using (var window = new RenderWindow(new VideoMode(828, 900), "Invaders")) 
+            using (var window = new RenderWindow(new VideoMode(WindowW, WindowH), "Invaders")) 
             {
                 window.Closed += (o, e) => window.Close();
                 
                 
                 Scene scene = new Scene();
                 scene.Spawn(new Background());
-                scene.Spawn(new EnemyShip());
+                scene.Spawn(new EnemyShip(){Position =  new Vector2f(50, 50)});
                 Clock clock = new Clock();
-                window.SetView(new View(new FloatRect(18,0,414,450)));
+                
                 while (window.IsOpen)
                 {
                     
