@@ -2,6 +2,7 @@ using System;
 using SFML.Graphics;
 using SFML.System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Invaders
 {
@@ -41,6 +42,7 @@ namespace Invaders
                 else
                     i++;
             }
+            
         }
 
         public void RenderAll(RenderTarget target)

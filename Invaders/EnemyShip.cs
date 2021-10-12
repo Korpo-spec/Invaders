@@ -8,9 +8,11 @@ namespace Invaders
     {
 
         public Vector2f direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+        private Schedule schedule;
+        private float speed = 300.0f;
         public EnemyShip() : base("sheet")
         {
-
+            schedule = new Schedule(1);
         }
 
         public override void Create(Scene scene)
@@ -19,7 +21,7 @@ namespace Invaders
             sprite.TextureRect = scene.Assets.LoadTile("enemyBlack");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             sprite.Rotation = ((180 / MathF.PI) * MathF.Atan2(direction.Y, direction.X)) + -90;
-            Schedule schedule =  new Schedule(1);
+            
             schedule.Action += (Scene Scene) => Scene.Spawn(new Bullet(direction, this){Position = (this.Position + (direction * 120)) });
             scene.Spawn(schedule);
             
@@ -27,11 +29,17 @@ namespace Invaders
             scene.Render += Render;
         }
 
+        public override void Destroy(Scene scene)
+        {
+            base.Destroy(scene);
+            schedule.Dead = true;
+        }
+
         public override void Update(Scene scene, float deltaTime)
         {
-            base.Update(scene, deltaTime);
+            
             var newPos = Position;
-            newPos += direction * deltaTime * 300.0f;
+            newPos += direction * deltaTime * speed;
             
             if (newPos.X > Program.WindowW - sprite.Origin.X)
             {
@@ -40,8 +48,8 @@ namespace Invaders
             }
             else if (newPos.Y > Program.WindowH - sprite.Origin.X)
             {
-                newPos.Y = Program.WindowH - sprite.Origin.X;
-                Reflect(new Vector2f(0,-1));
+                newPos = new Vector2f(Position.X , 0);
+                System.Console.WriteLine();
 
             }
             else if (newPos.X < 0 + sprite.Origin.X)
@@ -51,21 +59,23 @@ namespace Invaders
             }
             else if (newPos.Y < 0 + sprite.Origin.X)
             {
-                newPos.Y = 0 + sprite.Origin.X;
-                Reflect(new Vector2f(0,1));
+                
             }
             Position = newPos;
+            base.Update(scene, deltaTime);
         }
         
         protected override void CollideWith(Scene scene, Entity other)
         {
             if(other is Bullet bullet)
             {
-                
-                if (bullet.shotFrom != this)
+                if(!(bullet.shotFrom is EnemyShip))
                 {
-                    other.Dead = true;
-                    Dead = true;
+                    if (bullet.shotFrom != this)
+                    {
+                        other.Dead = true;
+                        Dead = true;
+                    }
                 }
                 
             }

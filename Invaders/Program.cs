@@ -20,6 +20,7 @@ namespace Invaders
                 scene.Spawn(new Background());
                 scene.Spawn(new EnemyShip(){Position =  new Vector2f(50, 50)});
                 scene.Spawn(new PlayerShip());
+                scene.Spawn(new ShipSpawner());
                 Clock clock = new Clock();
                 
                 while (window.IsOpen)

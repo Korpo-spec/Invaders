@@ -30,6 +30,15 @@ namespace Invaders
         {
             
             Position += direction * speed * deltaTime;
+
+            if (Position.X < 0 - sprite.Origin.X||
+                Position.X > Program.WindowW + sprite.Origin.X||
+                Position.Y < 0 - sprite.Origin.Y||
+                Position.Y > Program.WindowH + sprite.Origin.Y)
+            {
+                Dead = true;
+            }
+            
         }
 
         public override void Render(RenderTarget target)
