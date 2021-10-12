@@ -33,6 +33,23 @@ namespace Invaders
             if(Keyboard.IsKeyPressed(Keyboard.Key.Left)) Position += new Vector2f(-1, 0) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Up)) Position += new Vector2f (0, -1) * speed * deltaTime;
 
+            if (Position.X < 0 + sprite.Origin.X)
+            {
+                Position = new Vector2f(0 + sprite.Origin.X, Position.Y);
+            }
+            if (Position.X > Program.WindowW - sprite.Origin.X)
+            {
+                Position = new Vector2f(Program.WindowW - sprite.Origin.X, Position.Y);
+            }
+            if (Position.Y < 0 + sprite.Origin.Y)
+            {
+                Position = new Vector2f(Position.X, 0 + sprite.Origin.Y);
+            }
+            if (Position.Y > Program.WindowH - sprite.Origin.Y)
+            {
+                Position = new Vector2f(Position.X, Program.WindowH - sprite.Origin.Y);
+            }
+
             if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && timer > attackSpeed)
             {
                 scene.Spawn(new Bullet(new Vector2f(0, -1), this){Position = this.Position});

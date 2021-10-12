@@ -13,6 +13,8 @@ namespace Invaders
         public EnemyShip() : base("sheet")
         {
             schedule = new Schedule(1);
+            //TODO: Check if there is a better way to spawn bullets
+            //
         }
 
         public override void Create(Scene scene)
@@ -38,7 +40,7 @@ namespace Invaders
         public override void Update(Scene scene, float deltaTime)
         {
             
-            var newPos = Position;
+            Vector2f newPos = Position;
             newPos += direction * deltaTime * speed;
             
             if (newPos.X > Program.WindowW - sprite.Origin.X)
@@ -56,10 +58,6 @@ namespace Invaders
             {
                 newPos.X = 0 + sprite.Origin.X;
                 Reflect(new Vector2f(1,0));
-            }
-            else if (newPos.Y < 0 + sprite.Origin.X)
-            {
-                
             }
             Position = newPos;
             base.Update(scene, deltaTime);
