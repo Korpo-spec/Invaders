@@ -18,8 +18,8 @@ namespace Invaders
                 
                 Scene scene = new Scene();
                 scene.Spawn(new Background());
-                scene.Spawn(new EnemyShip(){Position =  new Vector2f(50, 50)});
-                scene.Spawn(new PlayerShip());
+                
+                scene.Spawn(new PlayerShip(){Position = new Vector2f(Program.WindowW/2 , Program.WindowW -100)});
                 scene.Spawn(new ShipSpawner());
                 
                 Image image = new Image("assets/cursor.png");

@@ -67,7 +67,7 @@ namespace Invaders
                 if (bullet.shotFrom != this)
                 {
                     other.Dead = true;
-                    Dead = true;
+                    
                 }
                 
             }
