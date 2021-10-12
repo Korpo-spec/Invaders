@@ -21,6 +21,14 @@ namespace Invaders
                 scene.Spawn(new EnemyShip(){Position =  new Vector2f(50, 50)});
                 scene.Spawn(new PlayerShip());
                 scene.Spawn(new ShipSpawner());
+                
+                Image image = new Image("assets/cursor.png");
+                
+                
+                
+                Cursor cursor = new Cursor(image.Pixels, new Vector2u(30, 33), new Vector2u(0,0));
+                
+                window.SetMouseCursor(cursor);
                 Clock clock = new Clock();
                 
                 while (window.IsOpen)

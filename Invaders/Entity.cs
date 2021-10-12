@@ -28,8 +28,9 @@ namespace Invaders
 
         public virtual void Create(Scene scene)
         {
+
             sprite.Texture = scene.Assets.LoadTexture(textureName);
-            
+            sprite.Texture.Smooth = true;
             
         }
 
