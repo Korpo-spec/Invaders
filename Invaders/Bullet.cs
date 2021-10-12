@@ -15,6 +15,7 @@ namespace Invaders
             this.direction = direction;
             this.shotFrom = shotFrom;
         }
+        public override bool Solid => true;
 
         public override void Create(Scene scene)
         {

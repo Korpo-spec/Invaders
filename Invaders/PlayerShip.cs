@@ -9,12 +9,13 @@ namespace Invaders
     {
         private float speed = 500;
         private float timer = 0;
-        private float attackSpeed = 0.5f;
+        private float attackSpeed = 0.2f;
 
         public PlayerShip() : base("sheet")
         {
 
         }
+        public override bool Solid => true;
         public override void Create(Scene scene)
         {
             base.Create(scene);
@@ -52,7 +53,7 @@ namespace Invaders
 
             if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && timer > attackSpeed)
             {
-                scene.Spawn(new Bullet(new Vector2f(0, -1), this){Position = this.Position});
+                scene.Spawn(new Bullet(new Vector2f(0, -1), this){Position = this.Position - new Vector2f(0, this.sprite.Origin.Y)});
                 timer = 0;
             }
             base.Update(scene, deltaTime);

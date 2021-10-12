@@ -1,6 +1,7 @@
 using System;
 using SFML.Graphics;
 using SFML.System;
+using System.Linq;
 
 namespace Invaders
 {
@@ -39,7 +40,8 @@ namespace Invaders
         }
         public virtual void Update(Scene scene, float deltaTime)
         {
-            foreach (Entity found in scene.FindIntersects(Bounds)) //Find collisions
+            
+            foreach (Entity found in scene.FindIntersects(Bounds).Where(e => e.Solid)) //Find collisions
             {
                 CollideWith(scene, found);
             }

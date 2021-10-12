@@ -17,6 +17,8 @@ namespace Invaders
             //
         }
 
+        public override bool Solid => true;
+
         public override void Create(Scene scene)
         {
             base.Create(scene);
@@ -48,7 +50,7 @@ namespace Invaders
                 newPos.X = Program.WindowW - sprite.Origin.X;
                 Reflect(new Vector2f(-1,0));
             }
-            else if (newPos.Y > Program.WindowH - sprite.Origin.X)
+            else if (newPos.Y > Program.WindowH + sprite.Origin.X)
             {
                 newPos = new Vector2f(Position.X , 0);
                 System.Console.WriteLine();
