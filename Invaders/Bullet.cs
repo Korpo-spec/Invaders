@@ -8,9 +8,12 @@ namespace Invaders
     {
         private Vector2f direction;
         private float speed = 600f;
-        public Bullet(Vector2f direction) : base("sheet")
+
+        public readonly Entity shotFrom;
+        public Bullet(Vector2f direction, Entity shotFrom) : base("sheet")
         {
             this.direction = direction;
+            this.shotFrom = shotFrom;
         }
 
         public override void Create(Scene scene)
@@ -25,7 +28,7 @@ namespace Invaders
 
         public override void Update(Scene scene, float deltaTime)
         {
-            base.Update(scene, deltaTime);
+            
             Position += direction * speed * deltaTime;
         }
 
@@ -35,16 +38,7 @@ namespace Invaders
 
         }
 
-        protected override void CollideWith(Scene scene, Entity other)
-        {
-            if(other is EnemyShip)
-            {
-                other.Dead = true;
-                Dead = true;
-            }
-            
-            
-        }
+        
 
     }
 }

@@ -26,6 +26,7 @@ namespace Invaders
 
         public override void Update(Scene scene, float deltaTime)
         {
+            base.Update(scene, deltaTime);
             timer += deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Right)) Position += new Vector2f(1,0) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Down)) Position += new Vector2f(0, 1) * speed * deltaTime;
@@ -34,9 +35,25 @@ namespace Invaders
 
             if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && timer > attackSpeed)
             {
-                scene.Spawn(new Bullet(new Vector2f(0, -1)){Position = this.Position});
+                scene.Spawn(new Bullet(new Vector2f(0, -1), this){Position = this.Position});
                 timer = 0;
             }
+        }
+
+        protected override void CollideWith(Scene scene, Entity other)
+        {
+            if(other is Bullet bullet)
+            {
+                
+                if (bullet.shotFrom != this)
+                {
+                    other.Dead = true;
+                    Dead = true;
+                }
+                
+            }
+            
+            
         }
     }
 }

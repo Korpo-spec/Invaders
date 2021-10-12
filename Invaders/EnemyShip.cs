@@ -20,7 +20,7 @@ namespace Invaders
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             sprite.Rotation = ((180 / MathF.PI) * MathF.Atan2(direction.Y, direction.X)) + -90;
             Schedule schedule =  new Schedule(1);
-            schedule.Action += (Scene Scene) => Scene.Spawn(new Bullet(direction){Position = (this.Position + (direction * 120)) });
+            schedule.Action += (Scene Scene) => Scene.Spawn(new Bullet(direction, this){Position = (this.Position + (direction * 120)) });
             scene.Spawn(schedule);
             
             scene.Update += Update;
@@ -29,6 +29,7 @@ namespace Invaders
 
         public override void Update(Scene scene, float deltaTime)
         {
+            base.Update(scene, deltaTime);
             var newPos = Position;
             newPos += direction * deltaTime * 300.0f;
             
@@ -54,6 +55,22 @@ namespace Invaders
                 Reflect(new Vector2f(0,1));
             }
             Position = newPos;
+        }
+        
+        protected override void CollideWith(Scene scene, Entity other)
+        {
+            if(other is Bullet bullet)
+            {
+                
+                if (bullet.shotFrom != this)
+                {
+                    other.Dead = true;
+                    Dead = true;
+                }
+                
+            }
+            
+            
         }
 
         private void Reflect(Vector2f normal)
