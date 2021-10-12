@@ -37,6 +37,7 @@ namespace Invaders
         {
             base.Destroy(scene);
             schedule.Dead = true;
+            scene.Spawn(new Explosion{Position =  this.Position});
         }
 
         public override void Update(Scene scene, float deltaTime)
