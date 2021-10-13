@@ -8,8 +8,9 @@ namespace Invaders
     public class PlayerShip : Entity
     {
         private float speed = 500;
-        private float timer = 0;
+        private float attackSpeedTimer = 0;
         private float attackSpeed = 0.2f;
+        private float iFrameTimer = 0;
 
         public PlayerShip() : base("sheet")
         {
@@ -21,6 +22,7 @@ namespace Invaders
             base.Create(scene);
             sprite.TextureRect = scene.Assets.LoadTile("playerShip1_blue");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
+            scene.Events.LoseHealth += LostHealth;
             scene.Update += Update;
             scene.Render += Render;
         }
@@ -28,7 +30,15 @@ namespace Invaders
         public override void Update(Scene scene, float deltaTime)
         {
             
-            timer += deltaTime;
+            attackSpeedTimer += deltaTime;
+            System.Console.WriteLine(iFrameTimer);
+            if ((iFrameTimer -= deltaTime) <= 0) 
+            {
+                iFrameTimer = 0;
+                sprite.Color = new Color(255, 255, 255);
+            }
+            
+            
             if(Keyboard.IsKeyPressed(Keyboard.Key.Right)) Position += new Vector2f(1,0) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Down)) Position += new Vector2f(0, 1) * speed * deltaTime;
             if(Keyboard.IsKeyPressed(Keyboard.Key.Left)) Position += new Vector2f(-1, 0) * speed * deltaTime;
@@ -51,10 +61,10 @@ namespace Invaders
                 Position = new Vector2f(Position.X, Program.WindowH - sprite.Origin.Y);
             }
 
-            if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && timer > attackSpeed)
+            if(Keyboard.IsKeyPressed(Keyboard.Key.Space) && attackSpeedTimer > attackSpeed)
             {
                 scene.Spawn(new Bullet(new Vector2f(0, -1), this){Position = this.Position - new Vector2f(0, this.sprite.Origin.Y)});
-                timer = 0;
+                attackSpeedTimer = 0;
             }
             base.Update(scene, deltaTime);
         }
@@ -67,12 +77,21 @@ namespace Invaders
                 if (bullet.shotFrom != this)
                 {
                     other.Dead = true;
+                    if (iFrameTimer <= 0)
+                    {
+                        scene.Events.PublishLoseHealth(1);
+                    }
                     
                 }
                 
             }
             
-            
+        }
+
+        private void LostHealth(Scene scene, int amount)
+        {
+            iFrameTimer = 2;
+            sprite.Color =  new Color(128, 128 , 128);
         }
     }
 }

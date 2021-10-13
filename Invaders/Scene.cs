@@ -15,9 +15,11 @@ namespace Invaders
         public event RenderEvent Render;
 
         public readonly AssetManager Assets;
+        public readonly EventManager Events;
         public Scene()
         {
             Assets = new AssetManager();
+            Events =  new EventManager();
         }
 
         public void Spawn(Entity entity)
@@ -29,6 +31,8 @@ namespace Invaders
         public void UpdateAll(float deltaTime)
         {
             Update?.Invoke(this, deltaTime);
+
+            Events.HandelEvents(this);
 
             for (int i = 0; i < entities.Count;)
             {
