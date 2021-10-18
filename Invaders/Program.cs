@@ -21,6 +21,7 @@ namespace Invaders
                 
                 scene.Spawn(new PlayerShip(){Position = new Vector2f(Program.WindowW/2 , Program.WindowW -100)});
                 scene.Spawn(new ShipSpawner());
+                scene.Spawn(new GUI());
                 
                 Image image = new Image("assets/cursor.png");
                 

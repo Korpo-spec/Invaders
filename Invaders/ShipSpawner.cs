@@ -7,8 +7,11 @@ namespace Invaders
     {
 
         private float timeLeft;
-        private float frequenzy;
+        private float frequency;
         private Random generator;
+        private float TimePlayed;
+
+        private int score;
         public ShipSpawner() : base("")
         {
             generator = new Random();
@@ -17,15 +20,22 @@ namespace Invaders
         public override void Create(Scene scene)
         {
             scene.Update += Update;
-            frequenzy = generator.Next(1, 10)/ 10f;
-            timeLeft = frequenzy;
+            frequency = generator.Next(1, 10)/ 10f;
+            timeLeft = 2;
         }
-    
+
         public override void Update(Scene scene, float deltaTime)
         {
+            
+
+            if ((TimePlayed += deltaTime) > score + 1)
+            {
+                score++;
+                scene.Events.PublicScore(1);
+            }
             if ((timeLeft -= deltaTime) > 0) return;
-            frequenzy = generator.Next(5, 15)/ 10f;
-            timeLeft = frequenzy;
+            frequency = GetFrequency(TimePlayed);
+            timeLeft = frequency;
             scene.Spawn(new EnemyShip{
                 Position =  new Vector2f(generator.Next(50, Program.WindowW - 50), -50),
                 direction = new Vector2f(generator.Next(0, 2) == 1 ? 1 : -1, (generator.Next(0, 11)/10f)) /MathF.Sqrt(2.0f)
@@ -33,6 +43,14 @@ namespace Invaders
                 });
 
            
+        }
+
+        private float GetFrequency(float timePassed)
+        {
+            float result;
+
+            result = -(MathF.Log(timePassed + 0.0015f) - 4);
+            return result > 0.2f ? result : 0.2f;
         }
 
     }

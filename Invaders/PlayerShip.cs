@@ -31,7 +31,6 @@ namespace Invaders
         {
             
             attackSpeedTimer += deltaTime;
-            System.Console.WriteLine(iFrameTimer);
             if ((iFrameTimer -= deltaTime) <= 0) 
             {
                 iFrameTimer = 0;
@@ -73,7 +72,6 @@ namespace Invaders
         {
             if(other is Bullet bullet)
             {
-                
                 if (bullet.shotFrom != this)
                 {
                     other.Dead = true;
@@ -81,11 +79,8 @@ namespace Invaders
                     {
                         scene.Events.PublishLoseHealth(1);
                     }
-                    
-                }
-                
+                } 
             }
-            
         }
 
         private void LostHealth(Scene scene, int amount)
