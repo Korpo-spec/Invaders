@@ -17,11 +17,7 @@ namespace Invaders
                 
                 
                 Scene scene = new Scene();
-                scene.Spawn(new Background());
-                
-                scene.Spawn(new PlayerShip(){Position = new Vector2f(Program.WindowW/2 , Program.WindowW -100)});
-                scene.Spawn(new ShipSpawner());
-                scene.Spawn(new GUI());
+                scene.sceneLoader.Load("mainlevel");
                 
                 Image image = new Image("assets/cursor.png");
                 

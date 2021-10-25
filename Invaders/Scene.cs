@@ -13,13 +13,16 @@ namespace Invaders
         private readonly List<Entity> entities = new List<Entity>();
         public event UpdateEvent Update;
         public event RenderEvent Render;
+        public event RenderEvent GuiRender;
 
         public readonly AssetManager Assets;
         public readonly EventManager Events;
+        public readonly SceneLoader sceneLoader;
         public Scene()
         {
             Assets = new AssetManager();
             Events =  new EventManager();
+            sceneLoader =  new SceneLoader();
         }
 
         public void Spawn(Entity entity)
@@ -28,8 +31,21 @@ namespace Invaders
             entity.Create(this);
         }
 
+        public void Clear() //Clear the whole entities list and play entities destroy function
+        {
+            for (int i = entities.Count - 1; i >= 0; i--)
+            {
+                Entity entity = entities[i];
+                entities.RemoveAt(i);
+                entity.Destroy(this);
+                
+            }
+        }
+
         public void UpdateAll(float deltaTime)
         {
+            sceneLoader.HandleSceneLoad(this);
+
             Update?.Invoke(this, deltaTime);
 
             Events.HandelEvents(this);
@@ -52,6 +68,7 @@ namespace Invaders
         public void RenderAll(RenderTarget target)
         {
             Render?.Invoke(target);
+            GuiRender?.Invoke(target);
         }
 
         public IEnumerable<Entity> FindIntersects(FloatRect bounds)//Find all intersects between chosen bounds and all other entities

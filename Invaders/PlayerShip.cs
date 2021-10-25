@@ -14,12 +14,13 @@ namespace Invaders
 
         public PlayerShip() : base("sheet")
         {
-
+            
         }
         public override bool Solid => true;
         public override void Create(Scene scene)
         {
             base.Create(scene);
+            Position = new Vector2f(Program.WindowW/2 , Program.WindowW -100);
             sprite.TextureRect = scene.Assets.LoadTile("playerShip1_blue");
             sprite.Origin = new Vector2f(sprite.TextureRect.Width/2 , sprite.TextureRect.Height/2);
             scene.Events.LoseHealth += LostHealth;
@@ -80,6 +81,14 @@ namespace Invaders
                         scene.Events.PublishLoseHealth(1);
                     }
                 } 
+            }
+            else if (other is EnemyShip enemyShip)
+            {
+                if (iFrameTimer <= 0)
+                {
+                    enemyShip.Dead = true;
+                    scene.Events.PublishLoseHealth(1);
+                }
             }
         }
 

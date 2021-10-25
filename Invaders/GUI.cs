@@ -23,10 +23,15 @@ namespace Invaders
             gui.Position = new Vector2f(50, 50);
             gui.CharacterSize = 24;
             gui.Font = scene.Assets.LoadFont("kenvector_future");
-            scene.Render += Render;
+            scene.GuiRender += Render;
             sprite.TextureRect = scene.Assets.LoadTile("playerLife1_blue");
             sprite.Scale = new Vector2f(2, 2);
             scene.Events.LoseHealth += LostHealth;
+        }
+
+        public override void Destroy(Scene scene)
+        {
+            scene.GuiRender -= Render;
         }
 
         private void scoreGain(Scene scene, int amount){
@@ -36,7 +41,11 @@ namespace Invaders
 
         private void LostHealth(Scene scene, int amount)
         {
-            hp -= amount;
+            if ((hp -= amount) <= 0)
+            {
+                scene.sceneLoader.Reload();
+            }
+            
         }
 
         public override void Render(RenderTarget target)
