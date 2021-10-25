@@ -30,7 +30,7 @@ namespace Invaders
         {
 
             sprite.Texture = scene.Assets.LoadTexture(textureName);
-
+            
         }
 
         public virtual void Destroy(Scene scene)

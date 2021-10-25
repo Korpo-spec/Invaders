@@ -87,6 +87,9 @@ namespace Invaders
         {
             iFrameTimer = 2;
             sprite.Color =  new Color(128, 128 , 128);
+            //Sprite dmgSprite = new Sprite(scene.Assets.LoadTexture("sheet"));
+            //dmgSprite.TextureRect = scene.Assets.LoadTile("playerShip1_damage2");
+            //sprite.Color += dmgSprite.Color;
         }
     }
 }

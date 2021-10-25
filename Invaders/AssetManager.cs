@@ -31,6 +31,7 @@ namespace Invaders
             string fileName = $"assets/{name}.png";
             Texture texture = new Texture(fileName);
             textures.Add(name, texture);
+            texture.Smooth = true;
             return texture;
         }
 
