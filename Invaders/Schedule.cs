@@ -16,7 +16,7 @@ namespace Invaders
             scene.Update += Update;
         }
         
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
             if((timeLeft -=deltaTime) > 0 && !Dead) return;
             Action?.Invoke(scene);

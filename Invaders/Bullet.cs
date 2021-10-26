@@ -27,7 +27,7 @@ namespace Invaders
             scene.Render += Render;
         }
 
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
             
             Position += direction * speed * deltaTime;
@@ -42,7 +42,7 @@ namespace Invaders
             
         }
 
-        public override void Render(RenderTarget target)
+        protected override void Render(RenderTarget target)
         {
             base.Render(target);
 

@@ -24,7 +24,7 @@ namespace Invaders
             timeLeft = 2;
         }
 
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
             
 

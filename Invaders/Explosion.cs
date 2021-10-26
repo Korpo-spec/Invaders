@@ -26,7 +26,7 @@ namespace Invaders
         }
         private int row = 0;
         private int col = 0;
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
 
             if ((time += deltaTime) > 1/frameRate)

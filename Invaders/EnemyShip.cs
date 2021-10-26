@@ -40,7 +40,7 @@ namespace Invaders
             scene.Spawn(new Explosion{Position =  this.Position});
         }
 
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
             
             Vector2f newPos = Position;
@@ -90,7 +90,7 @@ namespace Invaders
             sprite.Rotation = ((180 / MathF.PI) * MathF.Atan2(direction.Y, direction.X)) + -90;
         }
 
-        public override void Render(RenderTarget target)
+        protected override void Render(RenderTarget target)
         {
             
             

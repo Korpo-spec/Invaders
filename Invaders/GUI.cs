@@ -48,7 +48,7 @@ namespace Invaders
             
         }
 
-        public override void Render(RenderTarget target)
+        protected override void Render(RenderTarget target)
         {
             gui.DisplayedString = $"Score: {score}";
             target.Draw(gui);

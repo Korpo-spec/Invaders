@@ -38,7 +38,7 @@ namespace Invaders
             scene.Update -= Update;
             scene.Render -= Render;
         }
-        public virtual void Update(Scene scene, float deltaTime)
+        protected virtual void Update(Scene scene, float deltaTime)
         {
             
             foreach (Entity found in scene.FindIntersects(Bounds).Where(e => e.Solid)) //Find collisions
@@ -48,7 +48,7 @@ namespace Invaders
             
         }
 
-        public virtual void Render(RenderTarget target)
+        protected virtual void Render(RenderTarget target)
         {
             target.Draw(sprite);
         }

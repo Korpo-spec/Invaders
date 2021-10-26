@@ -28,7 +28,7 @@ namespace Invaders
             scene.Render += Render;
         }
 
-        public override void Update(Scene scene, float deltaTime)
+        protected override void Update(Scene scene, float deltaTime)
         {
             
             attackSpeedTimer += deltaTime;
